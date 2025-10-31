@@ -1,18 +1,23 @@
-import { GenericBodyStyled } from "./body.styled.ts"
-import { HeaderStyled } from "./header.styled"
-import { FooterStyled } from "./Footer.styled.ts"
+import { GenericBodyStyled } from "./styles/Body.styled.ts"
+import { HeaderStyled } from "./styles/Header.styled.ts"
+import { FooterStyled } from "./styles/Footer.styled.ts"
+import { ButtonStyled } from "./styles/ButtonContent.styled.ts"
+
 import logo from '../../assets/logoArnia.png'
 import visa from '../../assets/visa.png'
 import masterCard from '../../assets/mastercard.png'
 import boleto from '../../assets/boleto.png'
 import hipercard from '../../assets/hipercard.png'
-import { ButtonStyled } from "./ButtonContent.styled.ts"
+
 
 type GenericBodyProps = {
-  children: React.ReactNode
-}
+  children: React.ReactNode;
+  positionButton?: 'flex-start' | 'center' | 'flex-end';
+  onButtonClick?: () => void;
+};
 
-const GenericBody = ( {children}:GenericBodyProps ) => {
+
+const GenericBody = ( {children, positionButton = 'center', onButtonClick}:GenericBodyProps ) => {
   return (
     <GenericBodyStyled>
         <HeaderStyled>
@@ -22,9 +27,9 @@ const GenericBody = ( {children}:GenericBodyProps ) => {
 
         { children }
 
-        <ButtonStyled>
+        <ButtonStyled pos={positionButton}>
           <p>Total: R$20,00</p>
-          <button>Voltar ao topo</button>
+          <button onClick={onButtonClick}>Voltar ao topo</button>
         </ButtonStyled>
 
         <FooterStyled>

@@ -1,14 +1,12 @@
-import { useState } from 'react'
-import GenericBody from './components/GenericBody/GenericBody'
 import { GlobalStyle } from './GlobalStyled'
+import Routes from './routes/route'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
       <GlobalStyle />
-      <GenericBody />
+      <Routes />
     </>
   )
 }
