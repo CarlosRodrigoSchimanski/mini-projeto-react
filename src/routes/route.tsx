@@ -1,16 +1,16 @@
 import Home from "../components/Home/Home"
 import { useState } from "react";
+import type { Pages } from "../types/pages";
 
 
-type Page = "home" | "produtos" | "checkout";
 
 const Routes = () => {
-  const [page, setPage] = useState<Page>("home");
+  const [page, setPage] = useState<Pages>("home");
 
-  const goTo = (newPage: Page) => setPage(newPage);
+  const goTo = (newPage: Pages) => setPage(newPage);
 
   if (page === "home") return <Home onNavigate={goTo} />;
-  if (page === "produtos") return <h1>produtos</h1>;
+  if (page === "carrinho") return <h1>produtos</h1>;
   //if (page === "produtos") return <Produtos onNavigate={goTo} />;
   //if (page === "checkout") return <Checkout onNavigate={goTo} />;
 

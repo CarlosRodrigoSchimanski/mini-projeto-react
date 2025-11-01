@@ -6,12 +6,11 @@ export const HeaderStyled = styled.div`
   justify-content: space-between;
   padding: 30px;
   background-color: #6950A1;
-
-  h1 {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 400;
-    font-size: 32px;
-    line-height: 100%;
+  h2{
     color: white;
+    font-weight:400;
+    font-size: 32px;
+    font-family: 'poppins', sans-serif;
   }
+  
 `

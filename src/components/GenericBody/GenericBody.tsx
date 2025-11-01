@@ -8,28 +8,39 @@ import visa from '../../assets/visa.png'
 import masterCard from '../../assets/mastercard.png'
 import boleto from '../../assets/boleto.png'
 import hipercard from '../../assets/hipercard.png'
+import { UperCardStyled } from "./styles/UperCard.styled.ts"
 
 
 type GenericBodyProps = {
+  pageTitle:string;
+  showCont: boolean;
+  couter: number;
   children: React.ReactNode;
   positionButton?: 'flex-start' | 'center' | 'flex-end';
   onButtonClick?: () => void;
+  buttonText?: string;
+  showTotal: boolean;
 };
 
 
-const GenericBody = ( {children, positionButton = 'center', onButtonClick}:GenericBodyProps ) => {
+const GenericBody = ( {children, pageTitle,couter=0, showCont, positionButton = 'center', onButtonClick, buttonText, showTotal}:GenericBodyProps ) => {
   return (
     <GenericBodyStyled>
         <HeaderStyled>
             <img src={logo} alt="Logo Arnia" />
-            <h1>Loja Virtual</h1>
+            <h2>Loja Virtual</h2>
         </HeaderStyled>
+
+        <UperCardStyled>
+          <h2>{pageTitle}</h2>
+          {showCont && <span>{couter}</span>}
+        </UperCardStyled>
 
         { children }
 
         <ButtonStyled pos={positionButton}>
-          <p>Total: R$20,00</p>
-          <button onClick={onButtonClick}>Voltar ao topo</button>
+          {showTotal && <p>Total: R$20,00</p>}
+          <button onClick={onButtonClick}>{buttonText}</button>
         </ButtonStyled>
 
         <FooterStyled>
