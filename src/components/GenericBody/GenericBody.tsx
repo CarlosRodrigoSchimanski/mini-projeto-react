@@ -2,24 +2,25 @@ import { GenericBodyStyled } from "./styles/Body.styled.ts"
 import { HeaderStyled } from "./styles/Header.styled.ts"
 import { FooterStyled } from "./styles/Footer.styled.ts"
 import { ButtonStyled } from "./styles/ButtonContent.styled.ts"
-
-import logo from '../../assets/logoArnia.png'
-import visa from '../../assets/visa.png'
-import masterCard from '../../assets/mastercard.png'
-import boleto from '../../assets/boleto.png'
-import hipercard from '../../assets/hipercard.png'
 import { UperCardStyled } from "./styles/UperCard.styled.ts"
+
+import logo from './assets/logoArnia.png'
+import visa from './assets/visa.png'
+import masterCard from './assets/mastercard.png'
+import boleto from './assets/boleto.png'
+import hipercard from './assets/hipercard.png'
+
 
 
 type GenericBodyProps = {
-  pageTitle:string;
-  showCont: boolean;
-  couter: number;
-  children: React.ReactNode;
-  positionButton?: 'flex-start' | 'center' | 'flex-end';
-  onButtonClick?: () => void;
-  buttonText?: string;
-  showTotal: boolean;
+  pageTitle:string
+  showCont: boolean
+  couter: number
+  children: React.ReactNode
+  positionButton?: 'flex-start' | 'center' | 'flex-end'
+  onButtonClick?: () => void
+  buttonText?: string
+  showTotal: boolean
 };
 
 

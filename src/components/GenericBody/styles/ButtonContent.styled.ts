@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "styled-components"
 
 export const ButtonStyled = styled.div<{ pos: 'flex-start' | 'center' | 'flex-end' }>`
   display: flex;
