@@ -6,10 +6,9 @@ import { CheckoutContent } from "./styles/CheckoutContent.styled"
 type CheckoutProps = {
   onNavigate: (newPage: Pages) => void
   cart: Record<number, number>
-  setCart: React.Dispatch<React.SetStateAction<Record<number, number>>>
 }
 
-const Checkout = ({ onNavigate, cart, setCart }: CheckoutProps) => {
+const Checkout = ({ onNavigate, cart}: CheckoutProps) => {
   // Filtra produtos que estão no carrinho
   const cartProducts = products.filter(product => cart[product.id] > 0)
 

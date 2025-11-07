@@ -40,7 +40,6 @@ const Routes = () => {
       <Checkout
         onNavigate={goTo}
         cart={cart}
-        setCart={setCart}
       />
     )
   }
