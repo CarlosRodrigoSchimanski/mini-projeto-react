@@ -1,39 +1,80 @@
 import type { Pages } from "../../types/pages"
 import { products } from "../../db/db"
+import { List } from "./styles/List.styled"
+import { Item } from "./styles/Item.styled"
+import GenericBody from "../GenericBody/GenericBody"
+import Add from "./assets/+.png"
+import Remove from "./assets/-.png"
+
 
 type CartProps = {
   onNavigate: (newPage: Pages) => void
-  cartItens: number[]
-  setItens: React.Dispatch<React.SetStateAction<number[]>>
+  cart: Record<number, number>          // id → quantidade
+  setCart: React.Dispatch<React.SetStateAction<Record<number, number>>>
 }
 
-const Cart = ({ cartItens, setItens, onNavigate }: CartProps) => {
-  const cartProducts = products.filter(product => cartItens.includes(product.id))
-  const removeItem = (id: number) => {
-    setItens(prev => prev.filter(itemId => itemId !== id))
+
+const Cart = ({ cart, setCart, onNavigate }: CartProps) => {
+  const cartProducts = products.filter(product => cart[product.id] > 0)
+
+  // Atualiza quantidade do item (mínimo 0)
+  const updateQuantity = (id: number, delta: number) => {
+    setCart(prev => {
+      const newQty = Math.max((prev[id] || 0) + delta, 0)
+      return { ...prev, [id]: newQty }
+    })
   }
 
-  return (
-    <div>
-      <h2>Carrinho</h2>
+  // Remove produto completamente
+  const removeItem = (id: number) => {
+    setCart(prev => {
+      const newCart = { ...prev }
+      delete newCart[id]
+      return newCart
+    })
+  }
 
+  // Total geral
+  const total = cartProducts.reduce((acc, product) => {
+    const qty = cart[product.id] || 0
+    return acc + product.price * qty
+  }, 0)
+
+  return (
+    <GenericBody
+      pageTitle="Carrinho"
+      showCont={true}
+      couter={cartProducts.length}
+      positionButton="flex-start"
+      onButtonClick={() => onNavigate("checkout")}
+      buttonText="Finalizar Compra"
+      showTotal={true}
+      totalValue={total}
+    >
       {cartProducts.length === 0 ? (
         <p>Seu carrinho está vazio</p>
       ) : (
-        <ul>
+        <List>
           {cartProducts.map(product => (
-            <li key={product.id}>
+            <Item key={product.id}>
               <img src={product.image} alt={product.name} width={100} />
-              <span>{product.name}</span>
-              <span>R$ {product.price.toFixed(2)}</span>
-              <button onClick={() => removeItem(product.id)}>Remover</button>
-            </li>
+              <div className="info">
+                <span className="name">{product.name}</span>
+                <span className="price">Valor: R$ {product.price.toFixed(2)}</span>
+                <div className="quantity">
+                  <button onClick={() => updateQuantity(product.id, -1)}><img src={Remove} alt="remover"/></button>
+                  <span>{cart[product.id]}</span>
+                  <button onClick={() => updateQuantity(product.id, +1)}><img src={Add} alt="remover"/></button>
+                </div>
+                <button className="remove" onClick={() => removeItem(product.id)}>
+                  Remover
+                </button>
+              </div>
+            </Item>
           ))}
-        </ul>
+        </List>
       )}
-
-      <button onClick={() => onNavigate("home")}>Voltar às compras</button>
-    </div>
+    </GenericBody>
   )
 }
 

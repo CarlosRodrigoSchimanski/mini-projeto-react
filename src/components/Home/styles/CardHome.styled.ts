@@ -7,7 +7,7 @@ export const CardHome = styled.div`
 
     img {
         display: block;
-        width: 400px;
+        width: 200px;
         height: auto;
     }
 `

@@ -1,62 +1,58 @@
 import type { Pages } from '../../types/pages'
 import GenericBody from '../GenericBody/GenericBody'
 import { products } from '../../db/db'
-import { CardHome } from './styles/CardHome'
-import { ContainerCard } from './styles/ContainerCard'
-import { MarkButton } from './styles/MarkButton'
-import { useState } from 'react'
+import { CardHome } from './styles/CardHome.styled'
+import { ContainerCard } from './styles/ContainerCard.styled'
+import { MarkButton } from './styles/MarkButton.styled'
 
 type HomeProps = {
   onNavigate: (newPage: Pages) => void
-  cartItens: number[]
-  setItens: React.Dispatch<React.SetStateAction<number[]>>
+  cart: Record<number, number>         // id → quantidade
+  setCart: React.Dispatch<React.SetStateAction<Record<number, number>>>
 }
 
-const Home = ({ onNavigate, setItens, cartItens }: HomeProps) => {
-  const [productList, setProductList] = useState(
-    products.map(product => ({
-      ...product,
-      marked: cartItens.includes(product.id)
-    })))
+const Home = ({ onNavigate, cart, setCart }: HomeProps) => {
+  // Lista de produtos com marcação se estão no carrinho
+  const productList = products.map(product => ({
+    ...product,
+    marked: cart[product.id] > 0
+  }))
 
+  // Alterna seleção de produto
   const toggleSelect = (id: number) => {
-    setProductList(list =>
-      list.map(product =>
-        product.id === id ? { ...product, marked: !product.marked } : product))
-
-
-    setItens(prev => {
-      if (prev.includes(id)) {
-        return prev.filter(itemId => itemId !== id)
-      } else {
-        return [...prev, id]
+    setCart(prev => {
+      // Se já existe, remove (quantidade 0), senão adiciona com quantidade 1
+      if (prev[id]) {
+        const newCart = { ...prev }
+        delete newCart[id]
+        return newCart
       }
+      return { ...prev, [id]: 1 }
     })
   }
 
-  const selectedCount = cartItens.length
+  // Quantidade de itens selecionados
+  const selectedCount = Object.keys(cart).length
 
   return (
     <GenericBody
       pageTitle="Produtos"
       showCont={true}
       couter={selectedCount}
-      positionButton='flex-end'
+      positionButton="flex-end"
       onButtonClick={() => onNavigate("carrinho")}
       buttonText="Ir para Carrinho"
       showTotal={false}
     >
       <ContainerCard>
-        {productList.map((product) => (
+        {productList.map(product => (
           <CardHome key={product.id}>
             <img src={product.image} alt={product.name} width={200} />
-
             <MarkButton>
               <button
                 className={product.marked ? "active" : ""}
                 onClick={() => toggleSelect(product.id)}
               />
-              <span>Valor: R$ {product.price.toFixed(2)}</span>
             </MarkButton>
           </CardHome>
         ))}
