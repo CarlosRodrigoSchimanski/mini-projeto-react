@@ -48,7 +48,7 @@ src/
 1. Clone o repositório:
 
 ```bash
-git clone <https://github.com/CarlosRodrigoSchimanski/mini-projeto-react>
+git clone https://github.com/CarlosRodrigoSchimanski/mini-projeto-react
 ```
 
 2. Entre na pasta do projeto:
